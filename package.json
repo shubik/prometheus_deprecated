@@ -34,5 +34,6 @@
     "MD5": "~1.0.3"
   },
   "devDependencies": {},
+  "readme": "README.md",
   "readmeFilename": "README.md"
 }

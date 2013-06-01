@@ -53,8 +53,7 @@ model_options = {
     name: 'UserModel',
 
     store: new MongodbStore({
-        collection: 'users',
-        client: null
+        collection: 'users'
     }),
 
     schema: {
