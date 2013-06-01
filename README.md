@@ -139,43 +139,43 @@ Note that if model with such id is not found, promise will resolve with `null`.
 
 __Instance methods__
 
-### get()
+### model.get()
 
 `get(attr)` retrieves an attribute of the model, or an entire model if attribute name is not provided.
 
-### set()
+### model.set()
 
 `set(attr, [value])` sssigns new value to an attribute or a number of attributes of the model. If given only 1 param which is an Object, method will use keys of the object as attributes.
 
-### save()
+### model.save()
 
 `save()` saves a new model or model that has been changed by `set()`. Returns a promise which is resolved with model if model was successfully saved or error if saving model failed. If model was initialized without an id, new model will be attempted to be created.
 
-### destroy()
+### model.destroy()
 
-`destroy()` deletes model from a store.
+`destroy()` deletes model from a store. Returns a promise which is resolved with this model once model is deleted from database.
 
-### keys()
+### model.keys()
 
 `keys()` returns attribute names of this model.
 
-### toJSON()
+### model.toJSON()
 
 `toJSON()` returns all attributes of the model (key-value pairs).
 
-### validate()
+### model.validate()
 
 `validate()` validates model attributes according to the model's schema. Returns true or false.
 
-### toForm()
+### model.toForm()
 
 `toForm()` returns an object that can be used to create HTML form for this model.
 
-### parseForm()
+### model.parseForm()
 
 `parseForm(req)` populates a model by values from a request.
 
-### toTable()
+### model.toTable()
 
 `toTable()` returns an object that can be used to show this model in table form.
 
@@ -183,11 +183,25 @@ You can add model-specific instance methods by adding them to `prototype_methods
 
 __Static methods__
 
-Model constructors can have static methods which you can use without instantiating a model. By default there are two static methods: `find()` and `count()`. Both methods return a promise which is resolved with array of found results for `find()` and with number of models in the database for `count()`. Example:
+Model constructors can have static methods which you can use without instantiating a model. By default there are two static methods: `find()` and `count()`:
+
+### SomeModel.find()
+
+`find(query, offset, limit, sort)` returns a promise which is resolved with an array of models found in database using provided arguments. Example:
 
 ```javascript
 UserModel.find({ name: 'Shubik' })(function(results) {
     // do somethig with `results`
+});
+```
+
+### SomeModel.count()
+
+`count()` returns a promise which is resolved with number of all models in the database. Example:
+
+```javascript
+UserModel.count()(function(num) {
+    // do somethig with `num`
 });
 ```
 
