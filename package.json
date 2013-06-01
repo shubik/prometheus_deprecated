@@ -1,0 +1,38 @@
+{
+  "author": {
+    "name": "Alexander Farennikov",
+    "email": "farennikov@gmail.com"
+  },
+  "name": "heraclitus",
+  "description": "Simple ORM for Node.js with pluggable adapters",
+  "keywords": [
+    "ORM",
+    "object relational mapping",
+    "heraclitus",
+    "adapter",
+    "mongodb"
+  ],
+  "homepage": "https://github.com/shubik/heraclitus",
+  "license": "MIT",
+  "contributors": [],
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shubik/heraclitus"
+  },
+  "bugs": {
+    "url": "https://github.com/shubik/heraclitus/issues"
+  },
+  "main": "./index",
+  "scripts": {},
+  "engines": {
+    "node": ">= 0.4.0"
+  },
+  "dependencies": {
+    "deferred": "~0.6.1",
+    "mongodb": "~1.2.14",
+    "MD5": "~1.0.3"
+  },
+  "devDependencies": {},
+  "readmeFilename": "README.md"
+}
