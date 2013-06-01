@@ -33,7 +33,5 @@
     "mongodb": "~1.2.14",
     "MD5": "~1.0.3"
   },
-  "devDependencies": {},
-  "readme": "README.md",
-  "readmeFilename": "README.md"
+  "devDependencies": {}
 }
