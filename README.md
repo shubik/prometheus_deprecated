@@ -3,7 +3,7 @@ Heraclitus
 
 Heraclitus is a simple ORM for Node.js with adapter for MongoDB.
 
-Because of async nature of database calls, Heraclitus' model constructor always returns a promise (we prefer __[Deferred](https://github.com/medikoo/deferred)__ library), not a model. This promise resolves with model once it is created (e.g. for a blank model, `var user = new UserModel()`), or once it is loaded from database (e.g. if you provide model id, `var user = new UserModel(123)`) or `null` if model was not found.
+Because of async nature of database calls, Heraclitus' model constructor always returns a promise (we prefer [Deferred](https://github.com/medikoo/deferred) library), not a model. This promise resolves with model once it is created (e.g. for a blank model, `var user = new UserModel()`), or once it is loaded from database (e.g. if you provide model id, `var user = new UserModel(123)`) or `null` if model was not found.
 
 ## Defining models:
 
@@ -121,12 +121,74 @@ Existing model is instantiated with model id as argument:
 var user = UserModel(123);
 
 user(function(model) {
-    var new_name = model.get('name') + ' updated';
-    model.set('name', new_name);
-    model.save();
+    if (model === null) {
+        // model with id 123 was not found
+    } else {
+        var new_name = model.get('name') + ' updated';
+        model.set('name', new_name);
+        model.save();
+    }
 }, function(err) {
     // handle error
 });
 ```
 
 Note that if model with such id is not found, promise will resolve with `null`.
+
+## Model API
+
+__Instance methods__
+
+### get()
+
+`get(attr)` retrieves an attribute of the model, or an entire model if attribute name is not provided.
+
+### set()
+
+`set(attr, [value])` sssigns new value to an attribute or a number of attributes of the model. If given only 1 param which is an Object, method will use keys of the object as attributes.
+
+### save()
+
+`save()` saves a new model or model that has been changed by `set()`. Returns a promise which is resolved with model if model was successfully saved or error if saving model failed. If model was initialized without an id, new model will be attempted to be created.
+
+### destroy()
+
+`destroy()` deletes model from a store.
+
+### keys()
+
+`keys()` returns attribute names of this model.
+
+### toJSON()
+
+`toJSON()` returns all attributes of the model (key-value pairs).
+
+### validate()
+
+`validate()` validates model attributes according to the model's schema. Returns true or false.
+
+### toForm()
+
+`toForm()` returns an object that can be used to create HTML form for this model.
+
+### parseForm()
+
+`parseForm(req)` populates a model by values from a request.
+
+### toTable()
+
+`toTable()` returns an object that can be used to show this model in table form.
+
+You can add model-specific instance methods by adding them to `prototype_methods` param of the options you pass to `ModelFactory`.
+
+__Static methods__
+
+Model constructors can have static methods which you can use without instantiating a model. By default there are two static methods: `find()` and `count()`. Both methods return a promise which is resolved with array of found results for `find()` and with number of models in the database for `count()`. Example:
+
+```javascript
+UserModel.find({ name: 'Shubik' })(function(results) {
+    // do somethig with `results`
+});
+```
+
+You can add more model-specific static methods to `static_methods` param of the options you pass to `ModelFactory`.
