@@ -23,7 +23,7 @@
   "bugs": {
     "url": "https://github.com/shubik/heraclitus/issues"
   },
-  "main": "./index",
+  "main": "./lib/index.js",
   "scripts": {},
   "engines": {
     "node": ">= 0.4.0"
