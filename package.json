@@ -3,7 +3,7 @@
     "name": "Alexander Farennikov",
     "email": "farennikov@gmail.com"
   },
-  "name": "heraclitus",
+  "name": "prometheus",
   "description": "Simple ORM for Node.js with pluggable adapters",
   "keywords": [
     "ORM",
@@ -15,7 +15,7 @@
   "homepage": "https://github.com/shubik/heraclitus",
   "license": "MIT",
   "contributors": [],
-  "version": "0.0.2",
+  "version": "0.0.1",
   "repository": {
     "type": "git",
     "url": "https://github.com/shubik/heraclitus"
