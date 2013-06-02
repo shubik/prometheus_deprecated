@@ -96,7 +96,7 @@ UserModel = module.exports = ModelFactory(model_options);
 Blank model is instantiated by calling a model constructor without arguments:
 
 ```javascript
-var user = UserModel();
+var user = new UserModel();
 
 user(function(model) {
     model.set({
@@ -118,7 +118,7 @@ user(function(model) {
 Existing model is instantiated with model id as argument:
 
 ```javascript
-var user = UserModel(123);
+var user = new UserModel(123);
 
 user(function(model) {
     if (model === null) {
