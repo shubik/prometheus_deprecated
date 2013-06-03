@@ -8,20 +8,20 @@
   "keywords": [
     "ORM",
     "object relational mapping",
-    "heraclitus",
+    "prometheus",
     "adapter",
     "mongodb"
   ],
-  "homepage": "https://github.com/shubik/heraclitus",
+  "homepage": "https://github.com/shubik/prometheus",
   "license": "MIT",
   "contributors": [],
   "version": "0.0.1",
   "repository": {
     "type": "git",
-    "url": "https://github.com/shubik/heraclitus"
+    "url": "https://github.com/shubik/prometheus"
   },
   "bugs": {
-    "url": "https://github.com/shubik/heraclitus/issues"
+    "url": "https://github.com/shubik/prometheus/issues"
   },
   "main": "./lib/index.js",
   "scripts": {},

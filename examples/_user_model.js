@@ -71,7 +71,7 @@ model_options = {
         email: {
             name: 'Email',
             default: '',
-            type: ModelFactory.types.STRING,
+            type: ModelFactory.types.EMAIL,
             validate: Validators.isEmail,
             unique: true
         },
