@@ -100,7 +100,7 @@ model_options = {
             default: '/i/default_avatar.png',
             type: ModelFactory.types.STRING,
             content_type: 'image/jpeg, image/png, image/gif',
-            content_size: ['c50', 's600x600', 's1200x1200']
+            resize: ['c50', 's600x600', 's1200x1200']
         }
 
     },

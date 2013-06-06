@@ -206,3 +206,10 @@ UserModel.count()(function(num) {
 ```
 
 You can add more model-specific static methods to `static_methods` param of the options you pass to `ModelFactory`.
+
+# Changelog
+
+## v.0.0.2
+
+*   Refactored image uploader
+*   Added image resizer. Note that image resizer needs __imagemagick__ to be installed.
