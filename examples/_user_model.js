@@ -91,7 +91,7 @@ model_options = {
         status: {
             name: 'Status',
             default: 'active',
-            type: ModelFactory.types.STRING,
+            type: ModelFahctory.types.STRING,
             permitted: ['active', 'suspended'],
             hidden: true
         },
@@ -100,10 +100,15 @@ model_options = {
             default: '/i/default_avatar.png',
             type: ModelFactory.types.STRING,
             content_type: 'image/jpeg, image/png, image/gif',
-            content_size: 'c50, s600x600, s1200x1200'
+            content_size: ['c50', 's600x600', 's1200x1200']
         }
 
     },
+
+    uploads: {
+        path: '/home/sasha/development/uploads/',
+        path_public: '/uploads/'
+    }
 
     mixins: [MixinLog],
 
