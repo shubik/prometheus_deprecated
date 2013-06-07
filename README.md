@@ -339,12 +339,14 @@ Uploaded images will be saved in the provided path and will be persisted in the 
 
 ### Image sizes
 
-Image sizes are listed in the `resize` param of the attribute schema. There are two notations for the image sizes:
+Image sizes are listed in the `resize` param of the attribute schema and you can add as many size definitions as you want. There are two notations for the image sizes:
 
-*   __Crop:__ `cXXX`, e.g. `c100` which will generate thumbs 100x100px
-*   __Resize:___ `sXXXxYYY`, e.g. `s600x600` which will generate image with either size up to 600px wide or high
+*   __Crop:__ `cXXX`, e.g. `c100` which will generate thumbs 100x100px centered in the middle of the original image
+*   __Resize:__ `sXXXxYYY`, e.g. `s600x600` which will generate image with either size up to 600px wide or high
 
 All additional sizes are saved using image basename followed with `_{size}.ext`, e.g. `3e192ca4fa8ec546cdb6ef6e2ab55b00_c100.jpg` or `3e192ca4fa8ec546cdb6ef6e2ab55b00_s600x600.jpg`.
+
+Image resizer required [Imagemagick](http://www.imagemagick.org/script/index.php) to be installed on your host.
 
 ## Changelog
 
