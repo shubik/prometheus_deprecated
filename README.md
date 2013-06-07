@@ -1,7 +1,7 @@
 Prometheus
 ==========
 
-Prometheus is a simple ORM for Node.js with adapter for MongoDB.
+Prometheus is a simple ORM for Node.js with adapter for MongoDB and built-in form builder, form parser, and table builder. Form parser has uploads handler with image resizer.
 
 Because of async nature of database calls, Prometheus' model constructor always returns a promise (we prefer [Deferred](https://github.com/medikoo/deferred) library), not a model. This promise resolves with model once it is created (e.g. for a blank model, `var user = new UserModel()`), or once it is loaded from database (e.g. if you provide model id, `var user = new UserModel(123)`) or `null` if model was not found.
 
@@ -206,6 +206,77 @@ UserModel.count()(function(num) {
 ```
 
 You can add more model-specific static methods to `static_methods` param of the options you pass to `ModelFactory`.
+
+## Form builder
+
+Each model has built-in method `model.toForm()` which returns an object that you can use to render forms. Below is an example of using `toForm()` method for rendering a form to add a new company:
+
+```javascript
+add: function(req, res) {
+    var company = new CompanyModel();
+
+    company(function(model) {
+
+        model.set('auth_token', MD5(_.random(99999999, 999999999) + config.auth.salt));
+
+        var model_form = model.toForm({
+            url         : '/rest/company',
+            method      : 'POST',
+            show_hidden : true
+        });
+
+        res.render('admin/company_add', {
+            title      : 'Add company',
+            model_form : model_form
+        });
+
+    }, function(err) {
+        res.send(400, err.toString());
+    });
+}
+```
+
+Actual form is rendered using a Jade mixin and Twitter Bootstrap, as follows:
+
+```jade
+mixin form_builder(formdata)
+  form.form-horizontal.themed(id="#{formdata.tag.id}", name="#{formdata.tag.name}", method="#{formdata.tag.method}", action="#{formdata.tag.action}", enctype="#{formdata.tag.enctype}")
+    fieldset
+      for field in formdata.fields
+        .control-group
+          label.control-label #{field.label}
+          .controls
+            for inp in field.inputs
+
+              if field.type == 'text'
+                !{inp}
+
+              if field.type == 'textarea'
+                !{inp}
+
+              if field.type == 'select'
+                !{inp}
+
+              if field.type == 'checkbox'
+                label.checkbox
+                  !{inp}
+
+              if field.type == 'radio'
+                label.radio
+                  !{inp}
+
+              if field.type == 'other'
+                !{inp}
+
+      .form-actions
+        button.btn.medium.btn-primary(type="submit") Save
+```
+
+And this mixin is called from respective view as follows:
+
+```jade
++form_builder(model_form)
+```
 
 ## Changelog
 
