@@ -301,6 +301,51 @@ create: function(req, res) {
 }
 ```
 
+### Using image resizer
+
+You can optionally resize your image uploads by adding `resize` property to schema attribute, such as in this example:
+
+```javascript
+schema: {
+    logo: {
+        name: 'Company Logo',
+        default: null,
+        type: ModelFactory.types.STRING,
+        content_type: 'image/jpeg, image/png, image/gif',
+        resize: ['c100', 's600x600', 's1200x1200']
+    }
+}
+```
+
+Please note, that uploads are saved in store as their public URLs, not as a binary. Therefore in order to save uploads, your model definition needs to have `uploads` attribute, which is an object with two params: `path` and `path_public`, where `path` is path to upload folder on the server, and `path_public` is a path to the upload relative to your domain, e.g.:
+
+```javascript
+uploads: {
+    path: '/home/ubuntu/myproject/node/public/uploads/',
+    path_public: '/uploads/'
+}
+```
+
+You can generate `path` in your app.js as follows:
+
+```javascript
+var uploads = {
+    path_public: '/uploads/'
+};
+uploads.path = __dirname + '/public' + config.uploads.path_public;
+```
+
+Uploaded images will be saved in the provided path and will be persisted in the store as public path, e.g. `/uploads/3e192ca4fa8ec546cdb6ef6e2ab55b00.jpg`.
+
+### Image sizes
+
+Image sizes are listed in the `resize` param of the attribute schema. There are two notations for the image sizes:
+
+*   __Crop:__ `cXXX`, e.g. `c100` which will generate thumbs 100x100px
+*   __Resize:___ `sXXXxYYY`, e.g. `s600x600` which will generate image with either size up to 600px wide or high
+
+All additional sizes are saved using image basename followed with `_{size}.ext`, e.g. `3e192ca4fa8ec546cdb6ef6e2ab55b00_c100.jpg` or `3e192ca4fa8ec546cdb6ef6e2ab55b00_s600x600.jpg`.
+
 ## Changelog
 
 ### v.0.0.2
