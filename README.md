@@ -209,7 +209,7 @@ You can add more model-specific static methods to `static_methods` param of the 
 
 ## Form builder
 
-Each model has built-in method `model.toForm()` which returns an object that you can use to render forms. Below is an example of using `toForm()` method for rendering a form to add a new company:
+Each model has built-in method `model.toForm()` which returns an object that you can use to render forms. Below is an example route that uses `toForm()` method to display form for adding a new company:
 
 ```javascript
 add: function(req, res) {
@@ -276,6 +276,29 @@ And this mixin is called from respective view as follows:
 
 ```jade
 +form_builder(model_form)
+```
+
+## Form parser
+
+Each model has built-in method `model.parseForm()` which returns an object that you can use to render forms. Below is an example route that uses `parseForm()` method to add a new company:
+
+```javascript
+create: function(req, res) {
+    var params  = _.extend(req.params || {}, req.query || {}, req.body || {}),
+        company = new CompanyModel();
+
+    company(function(model) {
+        model.parseForm(req)(function(model) {
+            model.save()(function(model) {
+                res.json(200, model.toJSON());
+            }, function(err) {
+                res.send(400, err.toString());
+            });
+        }, function(err) {
+            res.send(400, err.toString());
+        });
+    });
+}
 ```
 
 ## Changelog
