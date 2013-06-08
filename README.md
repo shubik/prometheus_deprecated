@@ -1,7 +1,7 @@
 Prometheus
 ==========
 
-Prometheus is a simple ORM for Node.js with adapter for MongoDB and built-in form builder, form parser, and table builder. Form parser has uploads handler with image resizer.
+Prometheus is a simple ORM for Node.js with adapter for MongoDB and built-in __form builder__, __form parser__, and __table builder__. Form parser has __uploads handler__ with __image resizer.__
 
 Because of async nature of database calls, Prometheus' model constructor always returns a promise (we prefer [Deferred](https://github.com/medikoo/deferred) library), not a model. This promise resolves with model once it is created (e.g. for a blank model, `var user = new UserModel()`), or once it is loaded from database (e.g. if you provide model id, `var user = new UserModel(123)`) or `null` if model was not found.
 
