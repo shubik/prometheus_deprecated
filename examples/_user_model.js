@@ -1,7 +1,6 @@
 var prometheus    = require('../lib'),
     ModelFactory  = prometheus.factory,
     MongodbStore  = prometheus.stores.mongodb,
-    Validators    = prometheus.validators,
     MD5           = prometheus.MD5,
     MixinLog      = require('./mixins/log'),
     UserModel,
@@ -19,19 +18,6 @@ var prometheus    = require('../lib'),
         str = str.replace(/^\s+|\s+$/g, '');
         str = str.toLowerCase();
         return str;
-    },
-
-    /**
-    Tests if string is an email address
-
-    @method validate_email
-    @param {String} str String that we want to check
-    @return {Boolean} True if passed string is a valid email, false if it is not a valid email
-    */
-
-    validate_email = function (str) {
-        var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return re.test(str);
     },
 
     /**
@@ -72,7 +58,6 @@ model_options = {
             name: 'Email',
             default: '',
             type: ModelFactory.types.EMAIL,
-            validate: Validators.isEmail,
             unique: true
         },
         password: {

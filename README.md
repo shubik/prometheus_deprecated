@@ -21,7 +21,7 @@ You define model by passing model-specific options to ModelFactory, which return
 
 ### Required params
 
-*   `name` — Name of your model, e.g. `UserModel`
+*   `name` — Friendly name of your model, e.g. `UserModel`
 *   `schema` — Description of model attributes
 
 ### Optional params
@@ -37,7 +37,6 @@ You define model by passing model-specific options to ModelFactory, which return
 var prometheus    = require('prometheus'),
     ModelFactory  = prometheus.factory,
     MongodbStore  = prometheus.stores.mongodb,
-    Validators    = prometheus.validators,
     MD5           = prometheus.MD5,
     UserModel,
     model_options;
@@ -357,6 +356,43 @@ Image sizes are listed in the `resize` param of the attribute schema and you can
 All additional sizes are saved using image basename followed with `_{size}.ext`, e.g. `3e192ca4fa8ec546cdb6ef6e2ab55b00_c100.jpg` or `3e192ca4fa8ec546cdb6ef6e2ab55b00_s600x600.jpg`.
 
 Image resizer required [Imagemagick](http://www.imagemagick.org/script/index.php) to be installed on your host.
+
+## Validators
+
+Prometheus does validation by data type as long as you use `type` property in schema item description. But if attribute's value requires more specific validation, you can add a `validate` property to schema item. For example, if you want to know if value is a number Pi (to a certain proximity), you can add a validator:
+
+```javascript
+schema: {
+    pi: {
+        name: 'Pi',
+        default: null,
+        type: ModelFactory.types.NUMBER,
+        validate: function(val) {
+            return val / Math.PI > 0.999;
+        }
+    }
+}
+```
+
+## All schema properties
+
+### Required
+
+*   `name` — {String} Friendly name for this attribute, e.g. "UserModel"
+*   `default` — {Mixed} Default attribute value, e.g. `null` or `"changeme"`
+*   `type` — {String} Data type from list of constants in ModelFactory.types
+
+### Optional
+
+*   `validate` — {Function} that validates attribute value (see above)
+*   `permitted` — {Array} Permitted values
+*   `unique` — {Boolean} True if value must be unique
+*   `content_type` — {String} Comma separated mime types, default `text/plain`
+*   `resize` — {Array} Desired image sizes (see above)
+*   `multiline` — {Boolean} True if this string is text (length > 255)
+*   `maxlength` — {Number} Number if string has a maximum length
+*   `maketag` — {Function} that returns a custom HTML tag for this field
+*   `readonly` — {Boolean} True if user is not allowed to change value
 
 ## Changelog
 
