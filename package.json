@@ -15,7 +15,7 @@
   "homepage": "https://github.com/shubik/prometheus",
   "license": "MIT",
   "contributors": [],
-  "version": "0.0.2",
+  "version": "0.0.3",
   "repository": {
     "type": "git",
     "url": "https://github.com/shubik/prometheus"

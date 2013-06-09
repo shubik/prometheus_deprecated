@@ -396,6 +396,13 @@ schema: {
 
 ## Changelog
 
+### v.0.0.3
+
+*   Added setters and getters for model attributes
+*   Removed built-in validators
+*   Added implicit check for changes in model attributes before update
+*   Refactored `destroy()` method
+
 ### v.0.0.2
 
 *   Refactored image uploader
