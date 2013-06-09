@@ -1,17 +1,23 @@
 module.exports = {
-    log: function(data) {
-
-        var coll = this._name.toLowerCase().replace(/model/g, '') + '_log',
-            def  = deferred(),
-            payload;
-
-        payload = _.extend(data || {}, {
-            ts: utils.now(13)
+    initialize: function() {
+        this.on('afterInitialize', function() {
+            console.log('prometheus mixins/log.js: afterInitialize');
         });
 
-        console.log('heraclitus mixin_log.js log to %s :', coll, payload);
-        def.resolve(payload);
+        this.__proto__.log = function(data) {
+            var coll = this._name.toLowerCase().replace(/model/g, '') + '_log',
+                def  = deferred(),
+                payload;
 
-        return def.promise;
+            payload = _.extend(data || {}, {
+                ts: utils.now(13)
+            });
+
+            console.log('prometheus mixins/log.js log to %s :', coll, payload);
+
+            def.resolve(payload);
+
+            return def.promise;
+        }
     }
 };
