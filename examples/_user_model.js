@@ -181,6 +181,22 @@ model_options = {
 
             this.set('updated_at', utils.now());
         }
+    },
+
+    permissions: {
+        'create'  : ['admin'],
+        'read'    : ['admin', 'owner', 'company'],
+        'update'  : ['admin', 'owner'],
+        'destroy' : ['admin', 'owner']
+    },
+
+    roles: {
+        company: {
+            fk_param: 'company_id',
+            check: function (session_user) {
+                return true;
+            }
+        }
     }
 }
 
