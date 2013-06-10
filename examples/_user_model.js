@@ -184,10 +184,11 @@ model_options = {
     },
 
     permissions: {
-        'create'  : ['admin'],
-        'read'    : ['admin', 'owner', 'company'],
-        'update'  : ['admin', 'owner'],
-        'destroy' : ['admin', 'owner']
+        'create'   : ['admin'],
+        'read'     : ['admin', 'owner', 'company'],
+        'update'   : ['admin', 'owner'],
+        'destroy'  : ['admin', 'owner'],
+        'transfer' : ['admin', 'owner']
     },
 
     roles: {
