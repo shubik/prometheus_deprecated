@@ -393,6 +393,7 @@ schema: {
 *   `maxlength` — {Number} Number if string has a maximum length
 *   `maketag` — {Function} that returns a custom HTML tag for this field
 *   `readonly` — {Boolean} True if user is not allowed to change value
+*   `sync` — {Boolean} False if should not be synced with store
 
 ## Changelog
 
