@@ -3,7 +3,7 @@ Prometheus
 
 Prometheus is a simple ORM for Node.js with adapter for MongoDB (so far) and built-in __form builder__, __form parser__, and __table builder__. Form parser has __uploads handler__ with __image resizer.__
 
-Because of async nature of database calls, Prometheus' model constructor always returns a promise (we use [Deferred](https://github.com/medikoo/deferred) library), not a model itself. This promise resolves with model once it is created (e.g. for a blank model, `var user = new UserModel({})`), or when it is loaded from database (e.g. if you provide model id, `var user = new UserModel({ id: 123 })`) or `null` if model was not found.
+Because of async nature of database calls, Prometheus' model constructor has an internal promise (we use [Deferred](https://github.com/medikoo/deferred) library), which is exposed via attribute `ready`. This promise resolves with model once model is initialized (e.g. a blank model, `var user = new UserModel({})`), or loaded from database (e.g. if you provide a query, `var user = new UserModel({ id: 123 })`). If you're trying to load with a query a model that does not exist, you can know if by checking `model.get() === null` or `model.toJSON() === null`.
 
 ## Installation
 
@@ -109,7 +109,7 @@ Blank model is instantiated by calling a model constructor with a blank query:
 ```javascript
 var user = new UserModel({}, { req: req });
 
-user(function(model) {
+user.ready(function(model) {
     model.set({
         name: 'Shubik',
         email: 'farennikov@gmail.com',
@@ -131,7 +131,7 @@ Existing model is instantiated with model id as argument:
 ```javascript
 var user = new UserModel({ email: 'farennikov@gmail.com '}, { req: req });
 
-user(function(model) {
+user.ready(function(model) {
     if (model === null) {
         // model with id 123 was not found
     } else {
