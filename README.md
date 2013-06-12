@@ -401,8 +401,9 @@ schema: {
 
 ### v.0.1.0
 
-*   Refactored model initialization
-*   Added model permissions
+*   Instantiating model arguments changed to `query` and `[options]`
+*   Model constructor does not return promise any more; it returns self (model)
+*   Added model-level permissions
 
 ### v.0.0.3
 
