@@ -129,16 +129,17 @@ user.ready(function(model) {
 Existing model is instantiated with model id as argument:
 
 ```javascript
-var user = new UserModel({ email: 'farennikov@gmail.com '}, { req: req });
+var user = new UserModel({ email: 'farennikov@gmail.com' }, { req: req });
 
 user.ready(function(model) {
-    if (model === null) {
-        // model with id 123 was not found
+    if (model.toJSON() === null) {
+        // model with this email not found - save new
+        model.set({ email: 'farennikov@gmail.com' });
     } else {
         var new_name = model.get('name') + ' updated';
         model.set('name', new_name);
-        model.save();
     }
+    model.save();
 }, function(err) {
     // handle error
 });
@@ -224,11 +225,11 @@ Each model has built-in method `model.toForm()` which returns an object that you
 
 ```javascript
 add: function(req, res) {
-    var company = new CompanyModel();
+    var company = new CompanyModel({}, { req: req });
 
-    company(function(model) {
+    company.ready(function(model) {
 
-        model.set('auth_token', MD5(_.random(99999999, 999999999) + config.auth.salt));
+        model.set('auth_token', MD5(_.random(1000000, 9999999) + config.auth.salt));
 
         var model_form = model.toForm({
             url         : '/rest/company',
@@ -296,9 +297,9 @@ Each model has built-in method `model.parseForm()` which returns an object that 
 ```javascript
 create: function(req, res) {
     var params  = _.extend(req.params || {}, req.query || {}, req.body || {}),
-        company = new CompanyModel();
+        company = new CompanyModel({}, { req: req });
 
-    company(function(model) {
+    company.ready(function(model) {
         model.parseForm(req)(function(model) {
             model.save()(function(model) {
                 res.json(200, model.toJSON());
@@ -403,6 +404,7 @@ schema: {
 
 *   Instantiating model arguments changed to `query` and `[options]`
 *   Model constructor does not return promise any more; it returns self (model)
+*   If model is not found with a query, `model.ready` is resolved with `this`, not `null` as in previous versions. This allows you not to have to instantiate a new blank model, but instead reuse existing model instance
 *   Added model-level permissions
 
 ### v.0.0.3
