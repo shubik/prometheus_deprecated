@@ -3,7 +3,7 @@ Prometheus
 
 Prometheus is a simple ORM for Node.js with adapter for MongoDB (so far) and built-in __form builder__, __form parser__, and __table builder__. Form parser has __uploads handler__ with __image resizer.__
 
-Because of async nature of database calls, Prometheus' model constructor always returns a promise (we use [Deferred](https://github.com/medikoo/deferred) library), not a model itself. This promise resolves with model once it is created (e.g. for a blank model, `var user = new UserModel()`), or when it is loaded from database (e.g. if you provide model id, `var user = new UserModel(123)`) or `null` if model was not found.
+Because of async nature of database calls, Prometheus' model constructor always returns a promise (we use [Deferred](https://github.com/medikoo/deferred) library), not a model itself. This promise resolves with model once it is created (e.g. for a blank model, `var user = new UserModel({})`), or when it is loaded from database (e.g. if you provide model id, `var user = new UserModel({ id: 123 })`) or `null` if model was not found.
 
 ## Installation
 
@@ -30,6 +30,8 @@ You define model by passing model-specific options to ModelFactory, which return
 *   `prototype_methods` — Model-specific methods that will be added to constructor's prototype
 *   `static_methods` — Model-specific static methods that will be added to constructor
 *   `hooks` — Model-specific hooks (callbacks) that will be called during model lifecycle, e.g. `afterInitialize`, `beforeSave` etc.
+*   `permissions` — Object with a list of CRUDT permissions
+*   `roles` — Object with functions which check permissions per each role listed in `permissions`
 
 ## Defining a model example
 
@@ -102,10 +104,10 @@ UserModel = module.exports = ModelFactory(model_options);
 
 ## Instantiating models
 
-Blank model is instantiated by calling a model constructor without arguments:
+Blank model is instantiated by calling a model constructor with a blank query:
 
 ```javascript
-var user = new UserModel();
+var user = new UserModel({}, { req: req });
 
 user(function(model) {
     model.set({
@@ -127,7 +129,7 @@ user(function(model) {
 Existing model is instantiated with model id as argument:
 
 ```javascript
-var user = new UserModel(123);
+var user = new UserModel({ email: 'farennikov@gmail.com '}, { req: req });
 
 user(function(model) {
     if (model === null) {
@@ -396,6 +398,11 @@ schema: {
 *   `sync` — {Boolean} False if should not be synced with store
 
 ## Changelog
+
+### v.0.1.0
+
+*   Refactored model initialization
+*   Added model permissions
 
 ### v.0.0.3
 
