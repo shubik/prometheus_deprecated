@@ -192,9 +192,26 @@ model_options = {
     },
 
     roles: {
+        user: {
+            allowed: function (req) {
+                return req.session && req.session.user;
+            }
+        },
+
+        admin: {
+            allowed: function (req) {
+                return req.session && req.session.user && req.session.user.roles.indexOf('admin') !== -1;
+            }
+        },
+
+        owner: {
+            allowed: function(req) {
+                return false;
+            }
+        },
+
         company: {
-            fk_param: 'company_id',
-            check: function (session_user) {
+            allowed: function (req) {
                 return true;
             }
         }
