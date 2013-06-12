@@ -192,28 +192,28 @@ model_options = {
     },
 
     roles: {
-        user: {
-            allowed: function (req) {
-                return req.session && req.session.user;
-            }
+        user: function (model, user) {
+            var def = deferred();
+            def.resolve({ user: true });
+            return def.promise;
         },
 
-        admin: {
-            allowed: function (req) {
-                return req.session && req.session.user && req.session.user.roles.indexOf('admin') !== -1;
-            }
+        admin: function (model, user) {
+            var def = deferred();
+            def.resolve({ admin: true });
+            return def.promise;
         },
 
-        owner: {
-            allowed: function(req) {
-                return false;
-            }
+        owner: function (model, user) {
+            var def = deferred();
+            def.resolve({ owner: true });
+            return def.promise;
         },
 
-        company: {
-            allowed: function (req) {
-                return true;
-            }
+        company: function (model, user) {
+            var def = deferred();
+            def.resolve({ company: true });
+            return def.promise;
         }
     }
 }
