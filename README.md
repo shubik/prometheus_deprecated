@@ -378,7 +378,7 @@ schema: {
 ### Required
 
 *   `name` — {String} Friendly name for this attribute, e.g. "UserModel"
-*   `default` — {Mixed} Default attribute value, e.g. `null` or `"changeme"`
+*   `default` — {Mixed} Default attribute value, e.g. `null`, `"changeme"`, etc.
 *   `type` — {String} Data type from list of constants in ModelFactory.types
 
 ### Optional
@@ -393,6 +393,52 @@ schema: {
 *   `maketag` — {Function} that returns a custom HTML tag for this field
 *   `readonly` — {Boolean} True if user is not allowed to change value
 *   `sync` — {Boolean} False if should not be synced with store
+
+## Permissions
+
+Prometheus has model level permissions management. Defining permissions is optional. If permission rules are not defined, all permissions are set to `true`.
+
+### Defining permissions
+
+You can define permissions for models by adding `permissions` and `roles` properties to `model_options` of a model, as in the example below. `permissions` is a hash with key-value pairs, where keys are CRUD operations and values are arrays with user roles, able to perform corresponding operations:
+
+```javascript
+permissions: {
+    'create'   : ['admin'],
+    'read'     : ['admin', 'user', 'guest'],
+    'update'   : ['admin', 'user'],
+    'destroy'  : ['admin'],
+    'transfer' : ['admin']
+}
+```
+
+Two built-in roles are `app` and `guest`: if you do no pass `req` to the model constructor in the options, we assume that this model is not created within a function handling a route, so it's created elsewhere by the application. At the other hand, if `req` was passed with options, we assume that model is created as a result of HTTP(S) request by a user, who by default is a guest.
+
+`roles` is a hash of functions which return promises resolved with boolean result of permission checks:
+
+```javascript
+roles: {
+    user: function (model, req) {
+        var def = deferred(),
+            pass = !!(req && req.session.user);
+
+        def.resolve({ user: pass });
+        return def.promise;
+    },
+
+    admin: function (model, req) {
+        var def = deferred(),
+            pass = !!(req && req.session.user && req.session.user.roles.indexOf('admin') !== -1);
+
+        def.resolve({ admin: pass });
+        return def.promise;
+    }
+}
+```
+
+Above example adds custom user role checks for `user` and `admin`, where user is anyone with user hash inside `req.session` and `admin` is a user whose roles hash contains "admin".
+
+Please note that all of these functions return a promise — this is important because in Prometheus' internals we use `deferred.map()` to check all permissions. We did this on purpose because some permission checkers may be asyncronous.
 
 ## Changelog
 
