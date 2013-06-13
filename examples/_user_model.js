@@ -70,7 +70,7 @@ model_options = {
             name: 'Roles',
             default: ['admin'],
             type: ModelFactory.types.ARRAY,
-            permitted: ['admin', 'superadmin'],
+            permitted: ['admin', 'user'],
             hidden: true
         },
         status: {
@@ -100,7 +100,7 @@ model_options = {
     prototype_methods: {
 
         /**
-        Returns model of user's company if user is not superadmin
+        Returns model of user's company if user is not admin
         @method get_company
         @return {Function} Returns a promise which is resolved with user's company model or JSON
         */
@@ -185,34 +185,26 @@ model_options = {
 
     permissions: {
         'create'   : ['admin'],
-        'read'     : ['admin', 'owner', 'company'],
-        'update'   : ['admin', 'owner'],
-        'destroy'  : ['admin', 'owner'],
-        'transfer' : ['admin', 'owner']
+        'read'     : ['admin', 'user', 'guest'],
+        'update'   : ['admin', 'user'],
+        'destroy'  : ['admin'],
+        'transfer' : ['admin']
     },
 
     roles: {
-        user: function (model, user) {
-            var def = deferred();
-            def.resolve({ user: true });
+        user: function (model, req) {
+            var def = deferred(),
+                pass = !!(req && req.session.user);
+
+            def.resolve({ user: pass });
             return def.promise;
         },
 
-        admin: function (model, user) {
-            var def = deferred();
-            def.resolve({ admin: true });
-            return def.promise;
-        },
+        admin: function (model, req) {
+            var def = deferred(),
+                pass = !!(req && req.session.user && req.session.user.roles.indexOf('admin') !== -1);
 
-        owner: function (model, user) {
-            var def = deferred();
-            def.resolve({ owner: true });
-            return def.promise;
-        },
-
-        company: function (model, user) {
-            var def = deferred();
-            def.resolve({ company: true });
+            def.resolve({ admin: pass });
             return def.promise;
         }
     }
