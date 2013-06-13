@@ -440,6 +440,25 @@ Above example adds custom user role checks for `user` and `admin`, where user is
 
 Please note that all of these functions return a promise — this is important because in Prometheus' internals we use `deferred.map()` to check all permissions. We did this on purpose because some permission checkers may be asyncronous.
 
+### Handling forbidden operations
+
+If you are using any method on the model that involves CRUD operations, and user's permissions are insufficient to do a certain operation on the model, an error event will fire on the model, which you can handle by subscribing to it where you instantiate the model:
+
+```javascript
+var model = new UserModel({ email: 'farennikov@gmail.com '}, { req: req });
+
+model.on('error', function(err) {
+    res.send(403, err.toString());
+});
+
+model.ready(function(model) {
+    model.set('foo', 'bar');
+    model.save();
+});
+```
+
+Above example will send client "403 Forbidden" headers if session user does not have update rights.
+
 ## Changelog
 
 ### v.0.1.0
