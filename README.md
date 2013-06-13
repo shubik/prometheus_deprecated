@@ -167,10 +167,6 @@ __Instance methods__
 
 `destroy()` deletes model from a store. Returns a promise which is resolved with this model once model is deleted from database.
 
-### model.keys()
-
-`keys()` returns attribute names of this model.
-
 ### model.toJSON()
 
 `toJSON()` returns all attributes of the model (key-value pairs).
