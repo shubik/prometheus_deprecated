@@ -440,7 +440,7 @@ Above example adds custom user role checks for `user` and `admin`, where user is
 
 Please note that all of these functions return a promise — this is important because in Prometheus' internals we use `deferred.map()` to check all permissions. We did this on purpose because some permission checkers may be asyncronous.
 
-### Handling forbidden operations
+### Handling 403 Forbidden situations
 
 If you are using any method on the model that involves CRUD operations, and user's permissions are insufficient to do a certain operation on the model, an error event will fire on the model, which you can handle by subscribing to it where you instantiate the model:
 
