@@ -21,7 +21,7 @@ var prometheus    = require('../lib'),
     },
 
     /**
-    Tests if string is a valid password. So far logic is very simple but we can employ some regular expressions if we want to test complexity.
+    Tests if string is a valid password. Logic is very simple but you can use something more fancy, e.g. regex
     @method validate_password
     @param {String} str Password string that we want to test
     @return {Boolean} True if password is valid, false if password is invalid

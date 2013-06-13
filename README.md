@@ -104,7 +104,7 @@ UserModel = module.exports = ModelFactory(model_options);
 
 ## Instantiating models
 
-Blank model is instantiated by calling a model constructor with a blank query:
+Blank model is instantiated by calling a model constructor with a blank query as first argument:
 
 ```javascript
 var user = new UserModel({}, { req: req });
@@ -126,7 +126,7 @@ user.ready(function(model) {
 });
 ```
 
-Existing model is instantiated with model id as argument:
+Existing model is instantiated with a query as first argument:
 
 ```javascript
 var user = new UserModel({ email: 'farennikov@gmail.com' }, { req: req });
@@ -445,7 +445,7 @@ Please note that all of these functions return a promise — this is important b
 If you are using any method on the model that involves CRUD operations, and user's permissions are insufficient to do a certain operation on the model, an error event will fire on the model, which you can handle by subscribing to it where you instantiate the model:
 
 ```javascript
-var model = new UserModel({ email: 'farennikov@gmail.com '}, { req: req });
+var model = new UserModel({ email: 'farennikov@gmail.com' }, { req: req });
 
 model.on('error', function(err) {
     res.send(403, err.toString());
