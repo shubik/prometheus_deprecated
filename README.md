@@ -388,7 +388,6 @@ schema: {
 *   `unique` — {Boolean} True if value must be unique
 *   `content_type` — {String} Comma separated mime types, default `text/plain`
 *   `resize` — {Array} Desired image sizes (see above)
-*   `multiline` — {Boolean} True if this string is text (length > 255)
 *   `maxlength` — {Number} Number if string has a maximum length
 *   `maketag` — {Function} that returns a custom HTML tag for this field
 *   `readonly` — {Boolean} True if user is not allowed to change value
