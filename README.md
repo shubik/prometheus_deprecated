@@ -460,6 +460,12 @@ Above example will send client "403 Forbidden" headers if session user does not 
 
 ## Changelog
 
+### v.0.1.1
+
+*   Moved some event handlers in model_factory.js initializer to separate dependencies
+*   Changed `model.find()` attributes to accept only `query` and `options`
+*   Removed `multiline` param from schema descriptions; use `datatypes.TEXT` instead
+
 ### v.0.1.0
 
 *   Instantiating model arguments changed to `query` and `[options]`
