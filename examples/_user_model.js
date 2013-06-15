@@ -45,12 +45,6 @@ model_options = {
     }),
 
     schema: {
-        company_id: {
-            name: 'Company id',
-            default: 0,
-            type: ModelFactory.types.STRING,
-            hidden: true
-        },
         name: {
             name: 'Name',
             default: '',
@@ -181,7 +175,7 @@ model_options = {
                 this.set('password', MD5(password));
             }
 
-            this.set('updated_at', utils.now());
+            this.set('updated_at', new Date().toString());
         }
     },
 

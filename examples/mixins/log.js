@@ -10,6 +10,10 @@ module.exports = {
             console.log('prometheus mixins/log.js: afterInitialize');
         });
 
+        this.on('afterDestroy', function() {
+            console.log('prometheus mixins/log.js: - delete logs for this item');
+        });
+
         /* --- Example of adding temporary item to schema --- */
 
         this._schema._log = {
