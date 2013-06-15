@@ -1,4 +1,5 @@
-var _    = require('underscore');
+var _            = require('underscore'),
+    ModelFactory = require('../../lib').factory;
 
 module.exports = {
     initialize: function() {

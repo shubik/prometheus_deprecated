@@ -1,4 +1,6 @@
-var prometheus    = require('../lib'),
+var _             = require('underscore'),
+    deferred      = require('deferred'),
+    prometheus    = require('../lib'),
     ModelFactory  = prometheus.factory,
     MongodbStore  = prometheus.stores.mongodb,
     MD5           = prometheus.MD5,
@@ -76,7 +78,7 @@ model_options = {
         status: {
             name: 'Status',
             default: 'active',
-            type: ModelFahctory.types.STRING,
+            type: ModelFactory.types.STRING,
             permitted: ['active', 'suspended'],
             hidden: true
         },
@@ -93,7 +95,7 @@ model_options = {
     uploads: {
         path: '/home/sasha/development/uploads/',
         path_public: '/uploads/'
-    }
+    },
 
     mixins: [MixinLog],
 

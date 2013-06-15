@@ -1,7 +1,10 @@
 var UserModel = require('./_user_model'),
-    user = new UserModel();
+    user = new UserModel({});
 
-user(function(model) {
+user.ready(function(model) {
+
+    console.log('user created');
+
     model.set({
         name: 'Shubik',
         email: 'farennikov@gmail.com'
