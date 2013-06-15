@@ -460,6 +460,11 @@ Above example will send client "403 Forbidden" headers if session user does not 
 
 ## Changelog
 
+### v.0.1.2
+
+*   Refactored evt_handlers.js
+*   Fixed examples
+
 ### v.0.1.1
 
 *   Moved some event handlers in model_factory.js initializer to separate dependencies
