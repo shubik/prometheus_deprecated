@@ -4,10 +4,10 @@
     "email": "farennikov@gmail.com"
   },
   "name": "prometheus",
-  "description": "Simple ORM for Node.js with pluggable adapters",
+  "description": "Simple ODM for Node.js with pluggable adapters",
   "keywords": [
-    "ORM",
-    "object relational mapping",
+    "ODM",
+    "object document mapping",
     "prometheus",
     "adapter",
     "mongodb"
