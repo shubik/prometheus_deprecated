@@ -54,7 +54,8 @@ model_options = {
             name: 'Email',
             default: '',
             type: ModelFactory.types.EMAIL,
-            unique: true
+            //unique: true,
+            index: ModelFactory.indexes.UNIQUE
         },
         password: {
             name: 'Password',
