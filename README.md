@@ -62,7 +62,7 @@ model_options = {
             default: '',
             type: ModelFactory.types.STRING,
             validate: Validators.isEmail,
-            unique: true
+            index: ModelFactory.indexes.UNIQUE
         },
         password: {
             name: 'Password',
@@ -385,13 +385,13 @@ schema: {
 
 *   `validate` — {Function} that validates attribute value (see above)
 *   `permitted` — {Array} Permitted values
-*   `unique` — {Boolean} True if value must be unique
 *   `content_type` — {String} Comma separated mime types, default `text/plain`
 *   `resize` — {Array} Desired image sizes (see above)
 *   `maxlength` — {Number} Number if string has a maximum length
 *   `maketag` — {Function} that returns a custom HTML tag for this field
 *   `readonly` — {Boolean} True if user is not allowed to change value
 *   `sync` — {Boolean} False if should not be synced with store
+*   `index` — {String} Type of index, e.g. UNIQUE, FULLTEXT etc.
 
 ## Permissions
 
@@ -459,6 +459,11 @@ model.ready(function(model) {
 Above example will send client "403 Forbidden" headers if session user does not have update rights.
 
 ## Changelog
+
+### v.0.1.3
+
+*   Added ability to create and remove indexes on the store's collections
+*   Removed `unique` param from schema; use `index: ModelFactory.indexes.UNIQUE` instead
 
 ### v.0.1.2
 
