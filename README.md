@@ -460,6 +460,11 @@ Above example will send client "403 Forbidden" headers if session user does not 
 
 ## Changelog
 
+### v.0.1.4
+
+*   Added typecasting to values parsed by `parseForm`
+*   Misc. bug fixes
+
 ### v.0.1.3
 
 *   Added ability to create and remove indexes on the store's collections
