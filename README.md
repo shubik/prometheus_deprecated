@@ -392,6 +392,7 @@ schema: {
 *   `readonly` — {Boolean} True if user is not allowed to change value
 *   `sync` — {Boolean} False if should not be synced with store
 *   `index` — {String} Type of index, e.g. UNIQUE, FULLTEXT etc.
+*   `required` — {Boolean} true if value can not be empty, null or default
 
 ## Permissions
 
@@ -463,6 +464,8 @@ Above example will send client "403 Forbidden" headers if session user does not 
 ### v.0.1.4
 
 *   Added typecasting to values parsed by `parseForm`
+*   Added optional `required` attribute to schema
+*   Added check for `required` attribute, `PRIMARY` and `UNIQUE` indexes in model validator
 *   Misc. bug fixes
 
 ### v.0.1.3
