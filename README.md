@@ -373,6 +373,18 @@ schema: {
 }
 ```
 
+## Garbage collector
+
+Each model instance has a method `.gc()` which semi-frees memory by doing the following:
+
+*   Removes all listeners from the model
+*   Deletes all instance properties
+*   Replaces `model.__proto__` with a blak object
+
+### Garbage collector to-do
+
+TBD implementing [Object Pool Pattern](http://sourcemaking.com/design_patterns/object_pool).
+
 ## Schema properties
 
 ### Required
@@ -460,6 +472,11 @@ model.ready(function(model) {
 Above example will send client "403 Forbidden" headers if session user does not have update rights.
 
 ## Changelog
+
+### v.0.1.5
+
+*   Fixed an issue with EventEmitter being a part of model prototype instead of model instance which caused firing events on all models of the same type
+*   Added model instance method `.gc()` which removes listeners and cleans up instance attributes
 
 ### v.0.1.4
 
