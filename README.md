@@ -373,17 +373,9 @@ schema: {
 }
 ```
 
-## Garbage collector
+## Object Pool
 
-Each model instance has a method `.gc()` which semi-frees memory by doing the following:
-
-*   Removes all listeners from the model
-*   Deletes all instance properties
-*   Replaces `model.__proto__` with a blak object
-
-### Garbage collector to-do
-
-TBD implementing [Object Pool Pattern](http://sourcemaking.com/design_patterns/object_pool).
+Prometheus (somewhat) implements Object Pool Pattern. `model_factory.js` has a hash with arrays of model instances by model name. In order to take advantage of OPP, all you have to do is use your model constructor without `new` keyword (e.g. `model = DeviceModel({ id: id }, { req: req });`), and releasing model back to the pool by calling `model.release()` when you don't plan to use this model any more (e.g. after ending request with `res.send()`). Calling `model.release()` marks it as available and resets all initial attributes and event listeners for this model. Next time you attempt to create a model without `new`, `ModelConstructor` will try to find an available model instance of this type, initialize it again and return, or create new one and add to the pool if there are no free instances.
 
 ## Schema properties
 
@@ -476,7 +468,7 @@ Above example will send client "403 Forbidden" headers if session user does not 
 ### v.0.1.5
 
 *   Fixed an issue with EventEmitter being a part of model prototype instead of model instance which caused firing events on all models of the same type
-*   Added model instance method `.gc()` which removes listeners and cleans up instance attributes
+*   Implemented Object Pool Pattern
 
 ### v.0.1.4
 
