@@ -377,6 +377,20 @@ schema: {
 
 In order to helm minimize memory usage by reusing model instances, Prometheus (somewhat) implements [Object Pool Pattern](http://en.wikipedia.org/wiki/Object_pool_pattern), [reusable Obj class](https://gist.github.com/wthit56/5890898). `model_factory.js` has a hash with arrays of model instances by model name. In order to take advantage of OPP, all you have to do is use your model constructor without `new` keyword (e.g. `model = DeviceModel({ id: id }, { req: req });`), and releasing model back to the pool by calling `model.release()` when you don't plan to use this model any more (e.g. after ending request with `res.send()`). Calling `model.release()` marks it as available and resets all initial attributes and event listeners for this model. Next time you attempt to create a model without `new`, `ModelConstructor` will try to find an available model instance of this type, initialize it again and return, or create new one and add to the pool if there are no free instances.
 
+### Cleanup of unused model instances
+
+By default pool of model instances is never clean up. You can initiate cleaning up unused models by calling `reusable.cleanup()` as in the following code:
+
+```javascript
+var prometheus   = require('prometheus'),
+    reusable     = prometheus.reusable,
+    ModelFactory = prometheus.factory;
+
+reusable.cleanup(ModelFactory, 30000); // where last param is interval delay in ms
+```
+
+At any time you can stop cleanup of models by running `reusable.stop()`.
+
 ## Schema properties
 
 ### Required
@@ -469,6 +483,7 @@ Above example will send client "403 Forbidden" headers if session user does not 
 
 *   Fixed an issue with EventEmitter being a part of model prototype instead of model instance which caused firing events on all models of the same type
 *   Implemented Object Pool Pattern
+*   Implemented clean up of unused model instances at a set interval
 
 ### v.0.1.4
 
