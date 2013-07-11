@@ -479,11 +479,14 @@ Above example will send client "403 Forbidden" headers if session user does not 
 
 ## Changelog
 
+### v.0.1.6
+
+*   Implemented clean up of unused model instances at a set interval
+
 ### v.0.1.5
 
 *   Fixed an issue with EventEmitter being a part of model prototype instead of model instance which caused firing events on all models of the same type
 *   Implemented Object Pool Pattern
-*   Implemented clean up of unused model instances at a set interval
 
 ### v.0.1.4
 
