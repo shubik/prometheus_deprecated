@@ -482,6 +482,7 @@ Above example will send client "403 Forbidden" headers if session user does not 
 ### v.0.1.6
 
 *   Implemented clean up of unused model instances at a set interval
+*   Added `PASSWORD` data type. For this type, `toForm()` generates `<input type="password">` tag. This type validates as `STRING`.
 
 ### v.0.1.5
 
