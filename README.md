@@ -483,6 +483,7 @@ Above example will send client "403 Forbidden" headers if session user does not 
 
 *   Implemented clean up of unused model instances at a set interval
 *   Added `PASSWORD` data type. For this type, `toForm()` generates `<input type="password">` tag. This type validates as `STRING`.
+*   Fixed MongoDB store `find()` bug that prevented from using queries. Now JSON string queries are parsed to objects.
 
 ### v.0.1.5
 
