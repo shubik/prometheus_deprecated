@@ -479,6 +479,11 @@ Above example will send client "403 Forbidden" headers if session user does not 
 
 ## Changelog
 
+### v.0.1.7
+
+*   Changed checking permissions during CRUD ops from event-based to synchronous
+*   (this is bad but) Formbuilder has been altered to add Bootstrap 3 classes to form elements
+
 ### v.0.1.6
 
 *   Implemented clean up of unused model instances at a set interval
